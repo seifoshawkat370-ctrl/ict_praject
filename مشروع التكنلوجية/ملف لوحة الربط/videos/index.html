@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فيديوهات تعليمية</title>
+    <link rel="stylesheet" href="../style.css"> 
+    <!-- Reusing main style but might need specific tweaks -->
+    <style>
+        /* SpecificVideo Styles */
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            display: flex; flex-direction: column; align-items: center;
+            font-family: 'Fira Code', 'Cairo', monospace;
+        }
+        .container { width: 90%; max-width: 1200px; padding: 40px 0; }
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { color: #569cd6; }
+        
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background: #2d2d2d;
+            border: 1px solid #3e3e42;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .video-card:hover { transform: translateY(-5px); border-color: #007acc; }
+
+        .video-thumbnail {
+            width: 100%; height: 200px;
+            background: #000;
+            display: flex; justify-content: center; align-items: center;
+            color: #666; font-size: 3rem;
+        }
+        
+        .video-info { padding: 15px; }
+        .video-info h3 { margin-bottom: 10px; color: #fff; }
+        .video-info p { color: #888; font-size: 0.9rem; }
+        
+        .play-btn {
+            display: block; width: 100%; text-align: center;
+            background: #333; color: #fff; text-decoration: none;
+            padding: 10px; margin-top: 15px; border-radius: 4px;
+        }
+        .play-btn:hover { background: #007acc; }
+
+        .back-btn { display: inline-block; margin-top: 40px; color: #569cd6; text-decoration: none; border: 1px solid #569cd6; padding: 10px 20px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>// مكتبة الفيديوهات</h1>
+            <p>شروحات مرئية حول الأمن السيبراني</p>
+        </header>
+
+        <div class="videos-grid" id="videosContainer">
+            <!-- Dynamic videos go here -->
+            <div class="video-card">
+                 <div class="video-thumbnail">🎬</div>
+                 <div class="video-info">
+                     <h3>يا تدفع.. يا ملفاتك تودع!</h3>
+                     <p>سيناريو فيديو توعوي لمواجهة برامج الفدية.</p>
+                     <a href="script_details.html" class="play-btn">📄 عرض السيناريو</a>
+                 </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="../index.html" class="back-btn">_العودة للرئيسية</a>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('videosContainer');
+        const videos = JSON.parse(localStorage.getItem('videos_data') || '[]');
+
+        videos.forEach(video => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.innerHTML = `
+                <div class="video-thumbnail">🎬</div>
+                <div class="video-info">
+                    <h3>${video.title}</h3>
+                    <p>${video.description || ''}</p>
+                    <a href="${video.url}" class="play-btn" target="_blank">▶ تشغيل الفيديو</a>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>

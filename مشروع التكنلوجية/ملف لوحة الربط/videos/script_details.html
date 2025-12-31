@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>يا تدفع.. يا ملفاتك تودع! - سيناريو فيديو</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f0f12;
+            --card-bg: #1a1a1f;
+            --accent: #E11D48; /* Crimson for Ransomware theme */
+            --text-primary: #f1f1f1;
+            --text-secondary: #a1a1aa;
+            --scene-bg: #27272a;
+        }
+
+        * { margin:0; padding:0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 20px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--accent); }
+        .target-goal { color: var(--text-secondary); font-size: 1.1rem; }
+
+        .script-section {
+            background: var(--card-bg);
+            border-left: 4px solid var(--accent);
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .section-title { font-weight: 700; font-size: 1.5rem; color: #fff; }
+        .time-tag { font-family: 'Fira Code', monospace; background: var(--accent); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.9rem; }
+
+        .scene-box {
+            background: var(--scene-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: #d1d1d1;
+            border: 1px dashed #555;
+        }
+
+        .scene-box strong { color: var(--accent); display: block; margin-bottom: 5px; }
+
+        .dialogue-box {
+            padding-right: 20px;
+            border-right: 3px solid #444;
+        }
+
+        .narrator-label {
+            font-family: 'Fira Code', monospace;
+            color: var(--accent);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .dialogue-text {
+            font-size: 1.2rem;
+            color: #e4e4e7;
+        }
+
+        .bullet-list {
+            margin-top: 15px;
+            list-style: none;
+        }
+
+        .bullet-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-right: 25px;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--accent);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .footer-action {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--text-secondary);
+            border: 1px solid #444;
+            padding: 12px 30px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: #fff;
+            border-color: var(--accent);
+            background: rgba(225, 29, 72, 0.1);
+        }
+
+        .highlight { color: #fff; font-weight: bold; }
+
+        /* Animation */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .script-section { animation: fadeIn 0.6s ease-out forwards; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>يا تدفع.. يا ملفاتك تودع!</h1>
+            <p class="target-goal">هدف الفيديو: توعية الموظفين والأفراد بمخاطر برامج الفدية (Ransomware)</p>
+        </header>
+
+        <!-- Section 1 -->
+        <div class="script-section">
+            <div class="section-header">
+                <span class="section-title">1. المقدمة: الصدمة</span>
+                <span class="time-tag">0:00 - 0:30</span>
+            </div>
+            <div class="scene-box">
+                <strong>المشهد:</strong> شخص يجلس أمام جهاز الكمبيوتر المحمول، يحاول فتح ملف "عمل" مهم، فجأة تسود الشاشة وتظهر رسالة حمراء كبيرة بها أيقونة قفل مكتوب عليها "Your Files Are Encrypted".
+            </div>
+            <div class="dialogue-box">
+                <span class="narrator-label">المذيع (صوت):</span>
+                <p class="dialogue-text">"تخيل تصحى الصبح، تفتح اللاب توب بتاعك عشان تبدأ شغلك.. تلاقي كل صورك، ملفاتك، وتقارير الشغل اللي تعبت فيها شهور.. <span class="highlight">'مقفولة بقفل حديد'!</span> ومش بس كده، طالعلك رسالة بتقولك: 'قدامك 48 ساعة تدفع 500 دولار بالبتكوين.. وإلا ملفاتك هتتمسح للأبد'."</p>
+                <p class="dialogue-text" style="margin-top: 15px;">"أهلاً بيك في عالم الـ <span class="highlight">Ransomware</span> أو <span class="highlight">'برامج الفدية'</span>.. أكبر كابوس بيواجه الشركات والأفراد في العصر الرقمي."</p>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="script-section">
+            <div class="section-header">
+                <span class="section-title">2. إزاي الفيروس دخل بيتك؟</span>
+                <span class="time-tag">0:30 - 1:00</span>
+            </div>
+            <div class="scene-box">
+                <strong>المشهد:</strong> جرافيك توضيحي يظهر طرق العدوى: بريد إلكتروني، وحدة تخزين USB (فلاشة)، رابط مشبوه.
+            </div>
+            <div class="dialogue-box">
+                <span class="narrator-label">المذيع:</span>
+                <p class="dialogue-text">"طب هو الفيروس ده دخل جهازك إزاي؟ الـ Ransomware مش بيخبط على الباب، ده بيدخل <span class="highlight">'متنكر'</span>."</p>
+                <ul class="bullet-list">
+                    <li><span class="highlight">الإيميلات المضروبة:</span> يجيلك إيميل شكله رسمي بيقولك 'فاتورة الكهرباء' أو 'تحديث بيانات البنك'.. تدوس على اللينك، مبروك.. الجهاز اتشفّر.</li>
+                    <li><span class="highlight">البرامج المكركة:</span> بتدور على فوتوشوب بلاش؟ أو لعبة متكركة؟ غالباً بتبقى محملة بهدية مجانية وهي 'فيروس الفدية'.</li>
+                    <li><span class="highlight">الثغرات:</span> لو الويندوز بتاعك قديم ومش بتعمله Update، فأنت سايب شباك بيتك مفتوح لأي حرامي.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="script-section">
+            <div class="section-header">
+                <span class="section-title">3. الحقيقة المرة: أدفع ولا لأ؟</span>
+                <span class="time-tag">1:00 - 1:30</span>
+            </div>
+            <div class="scene-box">
+                <strong>المشهد:</strong> ميزان على الشاشة، في إحدى الكفتين "الأموال" وفي الأخرى "الملفات"، ويظهر شخص في المنتصف يبدو متردداً.
+            </div>
+            <div class="dialogue-box">
+                <span class="narrator-label">المذيع:</span>
+                <p class="dialogue-text">"السؤال اللي الكل بيسأله لما يقع في المصيبة دي: 'أدفع الفدية وخلاص؟'. الخبراء والأمن السيبراني بيقولوا لك: <span class="highlight">لأ!</span> ليه؟"</p>
+                <ul class="bullet-list">
+                    <li>أولاً: مفيش ضمان إن الحرامي هيبعتلك مفتاح التشفير فعلاً.</li>
+                    <li>ثانياً: أنت كده بتشجعهم يكملوا في جرايمهم ويستهدفوا ناس تانية.</li>
+                    <li>ثالثاً: غالباً بعد ما تدفع، بيعرفوا إنك 'صيد سهل' ويرجعوا يبتزوك تاني.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="script-section">
+            <div class="section-header">
+                <span class="section-title">4. الحل والوقاية (الخلاصة)</span>
+                <span class="time-tag">1:30 - 2:00</span>
+            </div>
+            <div class="scene-box">
+                <strong>المشهد:</strong> شاشة مقسمة إلى أربعة مربعات تحتوي على نصائح سريعة ومختصرة.
+            </div>
+            <div class="dialogue-box">
+                <span class="narrator-label">المذيع:</span>
+                <p class="dialogue-text">"عشان متبقاش الضحية الجاية، اعمل الـ 3 حاجات دول:"</p>
+                <ul class="bullet-list">
+                    <li><span class="highlight">Back-up (النسخ الاحتياطي):</span> أهم حاجة في حياتك! ملفاتك المهمة لازم تكون على هارد خارجي أو على السحابة (Cloud) بعيد عن جهازك.</li>
+                    <li><span class="highlight">التحديثات:</span> اعمل Update للويندوز ولبرامج الحماية فوراً.. الثغرات دي هي اللي بتدخلهم.</li>
+                    <li><span class="highlight">متدوسش على أي لينك:</span> شكيت في إيميل؟ امسحه. جالك عرض وهمي؟ فكك منه.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="script-section" style="border-left-color: #4ade80;">
+             <div class="section-header">
+                <span class="section-title">الخاتمة</span>
+            </div>
+            <div class="dialogue-box">
+                <p class="dialogue-text" style="font-style: italic;">"الـ Ransomware مش بس بيسرق ملفاتك، ده بيسرق وقتك وأعصابك. <span class="highlight">احمي نفسك النهاردة عشان متدفعش التمن بكرة.</span>"</p>
+                <div style="margin-top: 30px; text-align: center;">
+                    <h2 style="color: #4ade80;">احمِ بياناتك.. احمِ مستقبلك</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-action">
+            <a href="index.html" class="back-btn">_العودة لمكتبة الفيديوهات</a>
+        </div>
+    </div>
+
+</body>
+</html>

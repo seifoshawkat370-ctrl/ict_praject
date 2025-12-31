@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Cairo:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #1e1e1e;
+    --sidebar-bg: #252526;
+    --accent-color: #007acc;
+    --text-color: #d4d4d4;
+    --keyword-color: #569cd6;
+    --string-color: #ce9178;
+    --comment-color: #6a9955;
+    --card-bg: #2d2d2d;
+    --border-color: #3e3e42;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Fira Code', 'Cairo', monospace; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+.container { width: 90%; max-width: 800px; padding: 40px 0; }
+header { text-align: center; margin-bottom: 50px; }
+h1 { color: var(--keyword-color); margin-bottom: 10px; }
+
+form {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.form-group { margin-bottom: 30px; }
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.rating-options, .radio-options {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.radio-label {
+    background: var(--sidebar-bg);
+    padding: 10px 20px;
+    border: 1px solid(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.radio-label:hover { background: #333; }
+
+input[type="radio"] { margin-left: 10px; }
+
+input[type="text"], textarea {
+    width: 100%;
+    padding: 15px;
+    background: var(--sidebar-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.btn:hover { background: #0098ff; }
+
+.back-btn {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    color: var(--comment-color);
+    text-decoration: none;
+}

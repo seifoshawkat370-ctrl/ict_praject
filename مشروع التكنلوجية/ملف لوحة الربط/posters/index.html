@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض البوسترات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>معرض البوسترات التوعوية</h1>
+            <p>رسائل مرئية لنشر الوعي الأمني</p>
+        </header>
+
+        <div class="gallery-grid" id="galleryContainer">
+
+            
+            <!-- Dynamic posters injected here -->
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="../index.html" class="back-btn">_العودة للرئيسية</a>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <script>
+        function openModal(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modal.style.display = "block";
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+
+        // Load Posters from Logic
+        const container = document.getElementById('galleryContainer');
+        const posters = JSON.parse(localStorage.getItem('posters_data') || '[]');
+
+        posters.forEach(poster => {
+            const div = document.createElement('div');
+            div.className = 'poster-card';
+            div.innerHTML = `
+                <div class="poster-wrapper">
+                    <img src="${poster.url}" alt="${poster.title}" class="poster-img" onclick="openModal(this)">
+                </div>
+                <div class="poster-info">
+                    <h3>${poster.title}</h3>
+                    <a href="${poster.url}" download class="download-btn">⬇️ تحميل</a>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    </script>
+</body>
+</html>

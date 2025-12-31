@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المقالات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>مقالات وموارد تعليمية</h1>
+            <p>تعرف على أحدث طرق الحماية والوقاية من برامج الفدية</p>
+        </header>
+
+        <div class="articles-list" id="articlesContainer">
+            <!-- Default Static Article -->
+            <a href="protection.html" class="article-card">
+                <div class="article-icon">🛡️</div>
+                <div class="article-info">
+                    <h3>طرق الوقاية من برامج الفدية</h3>
+                    <p>دليل شامل حول كيفية حماية جهازك وبياناتك من التشفير.</p>
+                </div>
+                <div class="arrow">←</div>
+            </a>
+            
+            <!-- Dynamic articles will be injected here -->
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="../index.html" class="back-btn">_العودة للرئيسية</a>
+        </div>
+    </div>
+
+    <script>
+        // Load Articles from LocalStorage
+        const container = document.getElementById('articlesContainer');
+        const articles = JSON.parse(localStorage.getItem('articles_data') || '[]');
+
+        if (articles.length > 0) {
+            articles.forEach(article => {
+                const card = document.createElement('a');
+                card.href = article.url;
+                card.className = 'article-card';
+                card.target = article.url.startsWith('http') ? '_blank' : '_self';
+                
+                card.innerHTML = `
+                    <div class="article-icon">${article.icon || '📄'}</div>
+                    <div class="article-info">
+                        <h3>${article.title}</h3>
+                        <p>${article.description || ''}</p>
+                    </div>
+                    <div class="arrow">←</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>

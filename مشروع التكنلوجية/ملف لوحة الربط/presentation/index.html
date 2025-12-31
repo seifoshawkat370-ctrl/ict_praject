@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برامج الفدية - العرض التقديمي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0b;
+            --card-bg: #161617;
+            --accent-color: #00ff41;
+            --text-color: #e0e0e0;
+            --muted-text: #888;
+            --danger: #ff3e3e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Cairo', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .presentation-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: scale(0.95);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .slide-content {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 60px;
+            max-width: 1000px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .slide-content::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        h1 { font-size: 3.5rem; color: var(--accent-color); margin-bottom: 20px; text-shadow: 0 0 10px rgba(0,255,65,0.3); }
+        h2 { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 30px; }
+        h3 { font-size: 1.8rem; margin-bottom: 15px; color: #fff; }
+
+        p { font-size: 1.4rem; line-height: 1.6; color: var(--text-color); margin-bottom: 20px; }
+        
+        ul { list-style: none; margin-top: 20px; }
+        li { 
+            font-size: 1.3rem; 
+            margin-bottom: 15px; 
+            padding-right: 30px; 
+            position: relative; 
+        }
+        li::before {
+            content: ">";
+            position: absolute;
+            right: 0;
+            color: var(--accent-color);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .subtitle { color: var(--muted-text); font-size: 1.2rem; }
+        .presenter { margin-top: 40px; font-weight: bold; border-top: 1px solid #333; padding-top: 20px; display: inline-block; }
+
+        /* Navigation */
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Fira Code', monospace;
+        }
+        .nav-btn:hover { background: var(--accent-color); color: black; border-color: var(--accent-color); }
+        
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+            z-index: 101;
+        }
+
+        .slide-number {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-family: 'Fira Code', monospace;
+            color: var(--muted-text);
+        }
+
+        .back-home {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: var(--muted-text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid #333;
+            padding: 5px 15px;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+        /* Decorative elements */
+        .bg-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,255,65,0.05) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(50px);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .slide-content { padding: 30px; }
+            p, li { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow" style="top: -100px; left: -100px;"></div>
+    <div class="bg-glow" style="bottom: -100px; right: -100px;"></div>
+
+    <a href="../index.html" class="back-home">_العودة للرئيسية</a>
+
+    <div class="presentation-container" id="slidesWrapper">
+        <!-- Slide 1 -->
+        <div class="slide active">
+            <div class="slide-content" style="text-align: center;">
+                <div style="font-size: 5rem; margin-bottom: 20px;">🔒</div>
+                <h1>برامج الفدية – التهديد الصامت</h1>
+                <p>كيف نحمي بياناتنا من الابتزاز الرقمي</p>
+                <div class="presenter">إعداد الطالب: سيف عمر</div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>ما هي برامج الفدية؟</h2>
+                <p>برمجيات خبيثة تقوم بتشفير ملفاتك وتطلب فدية لفك التشفير.</p>
+                <ul>
+                    <li>تهدف للابتزاز المالي</li>
+                    <li>تستهدف الأفراد والمؤسسات</li>
+                    <li>تعتمد على التشفير القوي</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>كيف تعمل؟</h2>
+                <ul>
+                    <li>تبدأ العدوى من روابط أو مرفقات مشبوهة</li>
+                    <li>تستغل ثغرات في الأنظمة</li>
+                    <li>تشفّر الملفات بالكامل</li>
+                    <li>تظهر رسالة تطلب الدفع بالعملات الرقمية</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>أنواع برامج الفدية</h2>
+                <ul>
+                    <li><strong>Crypto Ransomware:</strong> يشفر الملفات</li>
+                    <li><strong>Locker Ransomware:</strong> يقفل الجهاز بالكامل</li>
+                    <li><strong>Double Extortion:</strong> يهدد بنشر البيانات</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>أمثلة واقعية</h2>
+                <ul>
+                    <li><strong>WannaCry (2017):</strong> أصاب 200 ألف جهاز</li>
+                    <li><strong>هجمات على مستشفيات:</strong> تسببت في توقف خدمات حرجة</li>
+                    <li><strong>خسائر عالمية:</strong> مليارات الدولارات سنويًا</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>التأثيرات على المؤسسات</h2>
+                <ul>
+                    <li>توقف العمليات</li>
+                    <li>خسائر مالية</li>
+                    <li>فقدان ثقة العملاء</li>
+                    <li>أضرار على السمعة</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>كيف نحمي أنفسنا؟</h2>
+                <ul>
+                    <li>تحديث الأنظمة بشكل دوري</li>
+                    <li>تدريب الموظفين على الأمن السيبراني</li>
+                    <li>النسخ الاحتياطي الدوري (Offline)</li>
+                    <li>استخدام برامج مضاد فيروسات قوية</li>
+                    <li>تطبيق سياسات وصول صارمة</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>ماذا نفعل عند الإصابة؟</h2>
+                <ul>
+                    <li>عدم دفع الفدية (لا يضمن استعادة الملفات)</li>
+                    <li>فصل الجهاز فوراً عن الشبكة</li>
+                    <li>التواصل مع الجهات المختصة بالأمن الرقمي</li>
+                    <li>محاولة استعادة النسخ الاحتياطية</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <div class="slide-content" style="text-align: center;">
+                <h2>ختام + أسئلة</h2>
+                <div style="font-size: 4rem; margin-bottom: 20px;">❓</div>
+                <h3>سؤال للجمهور:</h3>
+                <p>هل تعتقد أن دفع الفدية حل أم مخاطرة أكبر؟</p>
+                <div style="margin-top: 40px; color: var(--accent-color);">شكراً لحسن قرائتكم</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="nav-btn" onclick="prevSlide()">< السابق</button>
+        <button class="nav-btn" onclick="nextSlide()">التالي ></button>
+    </div>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-number" id="slideNum">1 / 9</div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progressBar');
+        const slideNum = document.getElementById('slideNum');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            progressBar.style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
+            slideNum.textContent = `${currentSlide + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+        });
+
+        // Initialize progress bar
+        updateSlide();
+    </script>
+</body>
+</html>

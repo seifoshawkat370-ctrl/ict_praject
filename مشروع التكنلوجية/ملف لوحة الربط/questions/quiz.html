@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار برامج الفدية | Ransomware Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1 class="glitch-text" data-text="اختبار برامج الفدية">اختبار برامج الفدية</h1>
+            <p>اختبر معلوماتك في الأمن السيبراني</p>
+        </header>
+
+        <div id="quiz-container" class="card">
+            <div id="start-screen">
+                <div class="icon-large">🔒</div>
+                <h2>هل أنت مستعد للتحدي؟</h2>
+                <p>سيتم تقديم 10 أسئلة عشوائية عن برامج الفدية.</p>
+                <button id="start-btn" class="btn">_ابدأ الاختبار</button>
+            </div>
+
+            <div id="question-screen" class="hidden">
+                <div class="progress-bar">
+                    <div id="progress" class="progress-fill"></div>
+                </div>
+                <div class="question-header">
+                    <span id="q-number">سؤال 1 / 10</span>
+                    <span id="timer">⏳ --</span>
+                </div>
+                <h3 id="question-text">نص السؤال هنا...</h3>
+                <div id="options-container" class="options-grid">
+                    <!-- Options injected by JS -->
+                </div>
+            </div>
+
+            <div id="result-screen" class="hidden">
+                <div class="icon-large" id="result-icon">🏆</div>
+                <h2 id="result-title">النتيجة النهائية</h2>
+                <div class="score-box">
+                    <span id="score">0</span> / 10
+                </div>
+                <p id="result-message">رسالة النتيجة</p>
+                <button onclick="location.reload()" class="btn">_إعادة المحاولة</button>
+                <a href="../index.html" class="btn btn-secondary">_العودة للرئيسية</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>جميع الحقوق محفوظة للطالب سيف عمر تحت اشراف المعلمة اسماء قشطة &copy; 2025</p>
+        </footer>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+</html>

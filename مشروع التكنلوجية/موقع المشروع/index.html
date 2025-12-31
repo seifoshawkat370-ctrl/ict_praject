@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برامج الفدية | Ransomware Awareness</title>
+    <meta name="description" content="دليل شامل لفهم برامج الفدية (Ransomware)، كيف تعمل، وكيف تحمي نفسك منها.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="overlay"></div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <i class="fas fa-shield-virus"></i>
+                <span>CYBER_SEC</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero">الرئيسية</a></li>
+                <li><a href="#about">ما هي؟</a></li>
+                <li><a href="#how-it-works">كيف تعمل</a></li>
+                <li><a href="#types">أنواعها</a></li>
+                <li><a href="#prevention">الحماية</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="container hero-content">
+                <h1 class="glitch" data-text="هل ملفاتك في أمان؟">هل ملفاتك في أمان؟</h1>
+                <p class="subtitle">برامج الفدية تهدد الجميع. تعلم كيف تحمي بياناتك الرقمية قبل فوات الأوان.</p>
+                <div class="cta-buttons">
+                    <a href="#about" class="btn btn-primary">ابدأ التعلم</a>
+                    <a href="#prevention" class="btn btn-outline">خطوات الحماية</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <i class="fas fa-user-secret hacker-icon"></i>
+                <div class="lock-animation">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is Ransomware -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title"> <span class="hash">#</span> ما هي برامج الفدية؟</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-file-code card-icon"></i>
+                        <h3>التعريف التقني</h3>
+                        <p>برمجيات خبيثة تستخدم خوارزميات تشفير متقدمة (مثل RSA و AES) لمنع الوصول إلى البيانات. يتم إنشاء زوج من المفاتيح (عام/خاص)، حيث يحتفظ المهاجم بالمفتاح الخاص (Private Key) على خوادمه (C&C)، مما يجعل فك التشفير مستحيلاً محلياً.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-network-wired card-icon"></i>
+                        <h3>آلية الانتشار</h3>
+                        <p>تنتشر غالباً عبر بروتوكولات سطح المكتب البعيد (RDP) غير المحمية، ورسائل التصيد الموجهة (Spear Phishing)، ومجموعات الاستغلال (Exploit Kits) التي تبحث عن ثغرات غير مُرقعة في النظام.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works -->
+        <section id="how-it-works" class="section bg-darker">
+            <div class="container">
+                <h2 class="section-title"><span class="hash">#</span> سلسلة الهجوم (Kill Chain)</h2>
+                <div class="steps text-center">
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-door-open"></i></div>
+                        <h4>1. الوصول الأولي</h4>
+                        <p>استغلال ثغرات RDP أو ملفات ماكرو خبيثة.</p>
+                    </div>
+                    <div class="step-arrow"><i class="fas fa-arrow-left"></i></div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-server"></i></div>
+                        <h4>2. الاتصال والتحكم (C2)</h4>
+                        <p>يتصل البرنامج بخادم المهاجم لتوليد مفاتيح التشفير.</p>
+                    </div>
+                    <div class="step-arrow"><i class="fas fa-arrow-left"></i></div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-hdd"></i></div>
+                        <h4>3. التشفير والحذف</h4>
+                        <p>تشفير الملفات وحذف النسخ الاحتياطية المحلية (Shadow Copies).</p>
+                    </div>
+                    <div class="step-arrow"><i class="fas fa-arrow-left"></i></div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-bitcoin-sign"></i></div>
+                        <h4>4. الابتزاز المزدوج</h4>
+                        <p>طلب الفدية والتهديد بتسريب البيانات المسروقة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Types -->
+        <section id="types" class="section">
+            <div class="container">
+                <h2 class="section-title"><span class="hash">#</span> الأنواع والأمثلة</h2>
+                <div class="grid-3">
+                    <div class="feature-box">
+                        <h3>Crypto Ransomware</h3>
+                        <p>يعمل بصمت لتشفير ملفات معينة. أشهر الأمثلة: <strong>WannaCry</strong> (الذي استغل ثغرة EternalBlue) و <strong>LockBit</strong>.</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>Locker Ransomware</h3>
+                        <p>يمنع الوصول لواجهة المستخدم بالكامل ولكنه نادراً ما يشفر الملفات. يستهدف غالباً الأجهزة المحمولة وأنظمة إنترنت الأشياء (IoT).</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>RaaS (Ransomware as a Service)</h3>
+                        <p>نموذج عمل يبيع فيه المطورون البرمجية لمجرمين آخرين مقابل نسبة من الأرباح، مما زاد من وتيرة الهجمات.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prevention -->
+        <section id="prevention" class="section">
+            <div class="container">
+                <h2 class="section-title text-accent"><span class="hash">#</span> استراتيجيات الدفاع</h2>
+                <div class="checklist">
+                    <div class="check-item">
+                        <i class="fas fa-database text-success"></i>
+                        <div>
+                            <h4>قاعدة النسخ الاحتياطي 3-2-1</h4>
+                            <p>احتفظ بـ 3 نسخ من بياناتك، على وسيطين مختلفين، واجعل نسخة واحدة على الأقل <strong>خارج الموقع (Offline)</strong> تماماً لمنع وصول البرمجية إليها.</p>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <i class="fas fa-shield-halved text-success"></i>
+                        <div>
+                            <h4>تجزئة الشبكة (Network Segmentation)</h4>
+                            <p>فصل الأنظمة الحساسة عن باقي الشبكة لمنع الحركة الجانبية (Lateral Movement) للمهاجمين بعد الاختراق الأولي.</p>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <i class="fas fa-user-lock text-success"></i>
+                        <div>
+                            <h4>المصادقة متعددة العوامل (MFA)</h4>
+                            <p>تفعيل MFA على جميع نقاط الوصول، خاصة الخدمات عن بعد مثل VPN و RDP.</p>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <i class="fas fa-laptop-medical text-success"></i>
+                        <div>
+                            <h4>إدارة التصحيح (Patch Management)</h4>
+                            <p>التحديث الفوري لأنظمة التشغيل والبرامج لإغلاق الثغرات المعروفة (CVEs) التي تستغلها برمجيات الفدية.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2025 التوعية السيبرانية. جميع الحقوق محفوظة.</p>
+            <p class="code-font highlight">System Safe...</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Cairo:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #1e1e1e;
+    --sidebar-bg: #252526;
+    --accent-color: #007acc;
+    --text-color: #d4d4d4;
+    --keyword-color: #569cd6;
+    --string-color: #ce9178;
+    --comment-color: #6a9955;
+    --card-bg: #2d2d2d;
+    --border-color: #3e3e42;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Fira Code', 'Cairo', monospace; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+.container { width: 90%; max-width: 1000px; padding: 40px 0; }
+header { text-align: center; margin-bottom: 50px; }
+h1 { color: var(--keyword-color); margin-bottom: 20px; }
+
+.article-list { display: grid; gap: 20px; }
+.article-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: 0.3s;
+}
+.article-card:hover { transform: translateX(-5px); border-color: var(--accent-color); }
+.article-icon { font-size: 2rem; margin-left: 20px; }
+.article-info h2 { font-size: 1.2rem; color: var(--string-color); margin-bottom: 5px; }
+.article-info p { color: var(--comment-color); font-size: 0.9rem; }
+
+/* Single Article */
+.article-content {
+    background: var(--card-bg);
+    padding: 30px; /* Reduced padding */
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    line-height: 1.8;
+}
+.article-content h2 { color: var(--keyword-color); margin: 30px 0 15px; }
+.article-content p { margin-bottom: 15px; color: #ccc; }
+.article-content ul { margin-right: 20px; margin-bottom: 20px; }
+.article-content li { margin-bottom: 10px; color: var(--text-color); }
+
+.back-btn {
+    display: inline-block;
+    margin-top: 30px;
+    color: var(--accent-color);
+    text-decoration: none;
+    border: 1px solid var(--accent-color);
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+.back-btn:hover { background: rgba(0, 122, 204, 0.1); }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل دخول المسؤول</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="glow-effect"></div>
+        <div class="login-card">
+            <div class="icon-lock">🔒</div>
+            <h1>لوحة التحكم</h1>
+            <p>PROJECT ADMIN ACCESS</p>
+            
+            <!-- Dummy fields to fool browser autofill -->
+            <div style="position: absolute; opacity: 0; height: 0; width: 0; overflow: hidden;">
+                <input type="text" name="fake_user">
+                <input type="password" name="fake_pass">
+            </div>
+
+            <form onsubmit="handleLogin(event)" autocomplete="off">
+                <div class="input-group" style="position: relative;">
+                    <input type="text" id="access_key" required placeholder=" " 
+                           autocomplete="off" 
+                           style="background-color: transparent !important; -webkit-text-security: disc; -moz-text-security: disc; text-security: disc; padding-left: 40px;">
+                    <label>Access Key / مفتاح الدخول</label>
+                    <span id="toggleBtn" onclick="togglePassword()" 
+                          style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 1.2rem; user-select: none; opacity: 0.7; transition: 0.3s; z-index: 5;">
+                        👁️
+                    </span>
+                </div>
+                <button type="submit" class="cyber-btn">
+                    <span>ACCESS DASHBOARD</span>
+                </button>
+            </form>
+            <p id="errorMsg" class="error-text">ACCESS DENIED / كلمة المرور خاطئة</p>
+            
+            <a href="../index.html" class="back-link">العودة الى الصفحة الرئيسية</a>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('access_key');
+            const btn = document.getElementById('toggleBtn');
+            const isMasked = input.style.webkitTextSecurity === 'disc' || input.style.textSecurity === 'disc';
+            
+            if (isMasked) {
+                input.style.webkitTextSecurity = 'none';
+                input.style.mozTextSecurity = 'none';
+                input.style.textSecurity = 'none';
+                btn.textContent = '🙈';
+            } else {
+                input.style.webkitTextSecurity = 'disc';
+                input.style.mozTextSecurity = 'disc';
+                input.style.textSecurity = 'disc';
+                btn.textContent = '👁️';
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('access_key').value;
+            // Password: SaifOmar270412
+            if (pass === "SaifOmar270412") {
+                sessionStorage.setItem('isAdmin', 'true');
+                // Creating particle effect before redirect
+                const btn = e.target.querySelector('button');
+                btn.innerHTML = 'AUTHENTICATING...';
+                btn.style.background = '#4ec9b0';
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 800);
+            } else {
+                const err = document.getElementById('errorMsg');
+                err.style.display = 'block';
+                err.classList.add('shake');
+                setTimeout(() => err.classList.remove('shake'), 500);
+            }
+        }
+    </script>
+</body>
+</html>

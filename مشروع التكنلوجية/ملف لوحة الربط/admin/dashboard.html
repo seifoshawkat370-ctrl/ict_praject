@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if (!sessionStorage.getItem('isAdmin')) window.location.href = 'login.html';
+    </script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <div class="header-content">
+                <h1>⚡ لوحة التحكم</h1>
+                <button onclick="logout()" class="btn-small">خروج</button>
+            </div>
+            
+            <!-- Quick Stats in Header -->
+            <div class="stats-bar">
+                <span>المشاركات: <strong id="totalCount">0</strong></span>
+                <span>التقييم: <strong id="avgRating">0.0</strong></span>
+                <span>هجمات: <strong id="attackedPercentage">0%</strong></span>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            <!-- Right Column: Content Management -->
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>المحتوى والروابط</h2>
+                    <button onclick="toggleAddForm()" class="btn-icon" title="إضافة رابط جديد">➕</button>
+                </div>
+
+                <form id="addForm" class="add-form hidden" onsubmit="addLink(event)">
+                    
+                    <!-- File Selection -->
+                    <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; border: 1px dashed #555;">
+                        <label style="display: block; margin-bottom: 5px; color: #aaa; font-size: 0.9rem;">1. اختر الملف (أو ادخل الرابط يدوياً):</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="file" id="filePicker" onchange="handleFileSelect(this)" style="width: 50%;">
+                            <input type="text" name="url" id="urlInput" placeholder="الرابط (URL)" required style="width: 50%; direction: ltr;">
+                        </div>
+                        <p style="font-size: 0.7rem; color: #ce9178; margin-top: 5px;">* ملاحظة: تأكد من أن الملف موجود داخل مجلد المشروع.</p>
+                    </div>
+
+                    <!-- Category Selection -->
+                    <div style="margin-top: 10px;">
+                        <label style="display: block; margin-bottom: 5px; color: #aaa; font-size: 0.9rem;">2. أين تريد إضافة هذا الملف؟ (القسم):</label>
+                        <select name="category" onchange="handleCategory(this)" style="width: 100%; padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 4px;">
+                            <option value="">-- اختر القسم --</option>
+                            <option value="articles">📄 صفحة المقالات (Articles)</option>
+                            <option value="posters">🖼️ معرض البوسترات (Posters)</option>
+                            <option value="videos">🎬 مكتبة الفيديوهات (Videos)</option>
+                            <option value="main">🏠 الصفحة الرئيسية (Main Dashboard)</option>
+                        </select>
+                    </div>
+
+                    <!-- Hidden/Auto-filled Fields -->
+                    <input type="hidden" name="icon" id="iconInput">
+                    
+                    <!-- Advanced Details Toggle -->
+                    <div style="margin-top: 15px;">
+                         <button type="button" onclick="toggleDetails()" style="background:none; border:none; color: #aaa; cursor:pointer; font-size: 0.8rem; text-decoration: underline;">+ عرض التفاصيل المتقدمة (العنوان/الوصف)</button>
+                    </div>
+
+                    <div id="advancedFields" class="hidden" style="margin-top: 10px; border-top: 1px dashed #444; padding-top: 10px;">
+                         <label style="display: block; margin-bottom: 5px; color: #aaa; font-size: 0.9rem;">3. تفاصيل الرابط (اختياري):</label>
+                        <input type="text" name="title" id="titleInput" placeholder="العنوان (يتم تعبئته تلقائياً)">
+                        <input type="text" name="description" placeholder="الوصف (اختياري)">
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="margin-top: 15px; width: 100%; padding: 12px; font-size: 1.1rem;">✅ إضافة الملف فوراً</button>
+                </form>
+
+                <div class="tabs" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid #333; padding-bottom: 10px; flex-wrap: wrap;" id="tabsContainer">
+                    <button onclick="switchTab('main')" class="tab-btn active" id="tab-main">🏠 الرئيسية</button>
+                    <button onclick="switchTab('articles')" class="tab-btn" id="tab-articles">📄 المقالات</button>
+                    <button onclick="switchTab('posters')" class="tab-btn" id="tab-posters">🖼️ البوسترات</button>
+                    <button onclick="switchTab('videos')" class="tab-btn" id="tab-videos">🎬 الفيديوهات</button>
+                    <!-- New Sections appear here -->
+                    <button onclick="createNewSection()" class="tab-btn" style="color: #4ec9b0;">+ قسم جديد</button>
+                </div>
+
+                <div id="linksList" class="items-list"></div>
+                
+                <!-- Restore Link -->
+                <div style="margin-top: 20px; text-align: left;">
+                     <button onclick="restoreDefaults()" style="background: none; border: 1px solid #444; color: #888; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">↺ استعادة الروابط الأساسية (بوستر، مقالات...)</button>
+                </div>
+            </section>
+
+            <!-- Left Column: Feedback -->
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>الملاحظات</h2>
+                    <button onclick="clearAllFeedback()" class="btn-text">حذف الكل</button>
+                    <!-- Hidden Reset Button for emergency -->
+                    <button onclick="resetDefaults()" style="opacity: 0.2; font-size: 0.6rem; margin-right: auto;">Reset</button>
+                </div>
+                <div id="feedbackContainer" class="items-list"></div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        let surveyData = JSON.parse(localStorage.getItem('ransomware_survey_data') || '[]');
+        
+        // Multi-source Data Managers
+        const StorageKeys = {
+            'main': 'dashboard_links',
+            'articles': 'articles_data',
+            'posters': 'posters_data',
+            'videos': 'videos_data'
+        };
+        
+        let currentTab = 'main';
+
+        function getData(type) {
+            return JSON.parse(localStorage.getItem(StorageKeys[type]) || '[]');
+        }
+
+        function saveData(type, data) {
+            localStorage.setItem(StorageKeys[type], JSON.stringify(data));
+        }
+
+        function logout() {
+            sessionStorage.removeItem('isAdmin');
+            window.location.href = 'login.html';
+        }
+
+        function toggleAddForm() {
+            document.getElementById('addForm').classList.toggle('hidden');
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            // Update UI Buttons
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            updateUI();
+        }
+
+        function toggleDetails() {
+            document.getElementById('advancedFields').classList.toggle('hidden');
+        }
+
+        // Logic
+        function updateUI() {
+            // Stats
+            document.getElementById('totalCount').textContent = surveyData.length;
+            const sum = surveyData.reduce((acc, curr) => acc + parseInt(curr.rating), 0);
+            document.getElementById('avgRating').textContent = surveyData.length ? (sum / surveyData.length).toFixed(1) : '0.0';
+            const attackedCount = surveyData.filter(item => item.attacked === 'yes').length;
+            document.getElementById('attackedPercentage').textContent = surveyData.length ? Math.round((attackedCount / surveyData.length) * 100) + '%' : '0%';
+
+            // Links / Content List based on Current Tab
+            const listContainer = document.getElementById('linksList');
+            listContainer.innerHTML = '';
+            
+            const currentData = getData(currentTab);
+            
+            if (currentData.length === 0) {
+                 listContainer.innerHTML = '<p class="empty-state">لا توجد عناصر في هذا القسم</p>';
+            } else {
+                currentData.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'item-row';
+                    div.innerHTML = `
+                        <div class="item-info">
+                            <span class="item-icon">${item.icon}</span>
+                            <span>${item.title}</span>
+                            <span style="font-size: 0.8rem; color: #666; margin-right: 5px;">(${item.url})</span>
+                        </div>
+                        <div class="actions" style="display:flex; gap:5px;">
+                            <button onclick="moveItem(${index}, -1)" class="btn-small" title="Move Up">⬆️</button>
+                            <button onclick="moveItem(${index}, 1)" class="btn-small" title="Move Down">⬇️</button>
+                            <button onclick="deleteItem(${index})" class="bin-btn">🗑️</button>
+                        </div>
+                    `;
+                    listContainer.appendChild(div);
+                });
+            }
+
+            // Feedback
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            feedbackContainer.innerHTML = '';
+            if (surveyData.length === 0) {
+                feedbackContainer.innerHTML = '<p class="empty-state">لا توجد ملاحظات</p>';
+            } else {
+                surveyData.slice().reverse().forEach((item, index) => {
+                    const originalIndex = surveyData.length - 1 - index;
+                    const div = document.createElement('div');
+                    div.className = 'item-block';
+                    div.innerHTML = `
+                        <div class="item-header">
+                            <span class="badg">${item.rating}⭐</span>
+                            <span class="date">${item.date}</span>
+                            <button onclick="deleteFeedback(${originalIndex})" class="bin-btn-small">×</button>
+                        </div>
+                        <p>${item.comment || '-'}</p>
+                        ${item.attacked === 'yes' ? '<span class="alert-tag">⚠️ تعرض لهجوم</span>' : ''}
+                    `;
+                    feedbackContainer.appendChild(div);
+                });
+            }
+        }
+
+        // Actions
+        function handleFileSelect(input) {
+            if (input.files.length > 0) {
+                const fileName = input.files[0].name;
+                document.getElementById('urlInput').value = fileName;
+                if (!document.getElementById('titleInput').value) {
+                    const title = fileName.split('.').slice(0, -1).join('.');
+                    document.getElementById('titleInput').value = title;
+                }
+            }
+        }
+
+        function handleCategory(select) {
+            const mapping = {
+                'articles': {'icon': '📄'},
+                'posters': {'icon': '🖼️'},
+                'videos': {'icon': '🎬'},
+                'main': {'icon': '🔗'}
+            };
+            if (select.value && mapping[select.value]) {
+                document.getElementById('iconInput').value = mapping[select.value].icon;
+            }
+        }
+
+        function addLink(e) {
+            e.preventDefault();
+            const f = e.target;
+            const targetSection = f.category.value;
+            
+            if (!targetSection) { alert('الرجاء اختيار القسم!'); return; }
+
+            const newItem = {
+                title: f.title.value || f.url.value || 'عنصر جديد',
+                url: f.url.value,
+                icon: f.icon.value || '🔗',
+                description: f.description.value || 'ملف جديد'
+            };
+
+            const data = getData(targetSection);
+            data.push(newItem);
+            saveData(targetSection, data);
+
+            f.reset();
+            f.classList.add('hidden');
+            
+            // Switch to the tab where we just added the item
+            switchTab(targetSection);
+            alert('تمت الإضافة بنجاح!');
+        }
+
+        function deleteItem(index) {
+            if(confirm('هل أنت متأكد من الحذف؟')) {
+                const data = getData(currentTab);
+                data.splice(index, 1);
+                saveData(currentTab, data);
+                updateUI();
+            }
+        }
+
+        function moveItem(index, direction) {
+            const data = getData(currentTab);
+            const newIndex = index + direction;
+            
+            // Boundary checks
+            if (newIndex < 0 || newIndex >= data.length) return;
+            
+            // Swap
+            const temp = data[index];
+            data[index] = data[newIndex];
+            data[newIndex] = temp;
+            
+            saveData(currentTab, data);
+            updateUI();
+        }
+
+        function deleteFeedback(index) {
+            if(confirm('حذف؟')) {
+                surveyData.splice(index, 1);
+                localStorage.setItem('ransomware_survey_data', JSON.stringify(surveyData));
+                updateUI();
+            }
+        }
+
+        function clearAllFeedback() {
+            if(confirm('حذف الكل؟')) {
+                surveyData = [];
+                localStorage.removeItem('ransomware_survey_data');
+                updateUI();
+            }
+        }
+
+        // Initial Load of Custom Sections
+        let customSections = JSON.parse(localStorage.getItem('custom_sections') || '[]');
+
+        function initTabs() {
+            const tabsContainer = document.getElementById('tabsContainer');
+            // Remove old custom tabs first (all after the + button, but we append before it actually)
+            // Easier: just reload standard ones and append custom
+            
+            // Render custom section buttons
+            customSections.forEach(sec => {
+                if (document.getElementById(`tab-${sec.id}`)) return; // already exists
+                
+                const btn = document.createElement('button');
+                btn.className = 'tab-btn';
+                btn.id = `tab-${sec.id}`;
+                btn.textContent = `📁 ${sec.title}`;
+                btn.onclick = () => switchTab(sec.id);
+                
+                // Insert before the "+ New Section" button (last child)
+                const addBtn = tabsContainer.lastElementChild;
+                tabsContainer.insertBefore(btn, addBtn);
+            });
+            
+            // Update Select Dropdown
+             const select = document.getElementsByName('category')[0];
+             customSections.forEach(sec => {
+                 // Check if option exists
+                 let exists = false;
+                 for(let i=0; i<select.options.length; i++) {
+                     if(select.options[i].value === sec.id) exists = true;
+                 }
+                 
+                 if(!exists) {
+                     const opt = document.createElement('option');
+                     opt.value = sec.id;
+                     opt.textContent = `📁 ${sec.title} (قسم خاص)`;
+                     select.appendChild(opt);
+                 }
+             });
+        }
+
+        function createNewSection() {
+            const title = prompt('أدخل اسم القسم الجديد (مثلاً: ألعاب، شهادات):');
+            if (!title) return;
+            
+            const id = 'section_' + Date.now();
+            
+            // 1. Add to Custom Sections List
+            customSections.push({ id: id, title: title });
+            localStorage.setItem('custom_sections', JSON.stringify(customSections));
+            
+            // 2. Add Link to Main Dashboard automatically
+            const newItem = {
+                title: title,
+                url: `viewer.html?id=${id}&title=${encodeURIComponent(title)}`,
+                icon: '📁',
+                description: 'قسم جديد'
+            };
+            let mainLinks = JSON.parse(localStorage.getItem('dashboard_links') || '[]');
+            mainLinks.push(newItem);
+            localStorage.setItem('dashboard_links', JSON.stringify(mainLinks));
+
+            alert('تم إنشاء القسم وإضافته للصفحة الرئيسية!');
+            location.reload(); // Reload to refresh tabs and dropdowns
+        }
+
+        function restoreDefaults() {
+            if(confirm('هل أنت متأكد؟ سيتم استعادة روابط البوستر، المقالات، الفيديوهات إذا كانت مفقودة.')) {
+                // We don't want to wipe everything, just ensure defaults exist
+                const defaultLinks = [
+                    { title: "موقع المشروع", url: "site_wrapper.html", icon: "💻", description: "Project Website" },
+                    { title: "الاستبيان", url: "survey/index.html", icon: "📊", description: "Survey Form" },
+                    { title: "أسئلة", url: "questions/quiz.html", icon: "❓", description: "Questions & Quiz" },
+                    { title: "بوستر", url: "posters/index.html", icon: "🖼️", description: "Project Posters" },
+                    { title: "مقالات", url: "articles/index.html", icon: "📰", description: "Articles" },
+                    { title: "فيديوهات", url: "videos/index.html", icon: "🎬", description: "Educational Videos" }
+                ];
+                
+                let current = JSON.parse(localStorage.getItem('dashboard_links') || '[]');
+                
+                // Merge logic: Add if URL doesn't exist
+                let added = false;
+                defaultLinks.forEach(def => {
+                    if (!current.some(c => c.url === def.url)) {
+                        current.push(def);
+                        added = true;
+                    }
+                });
+                
+                if(added) {
+                    localStorage.setItem('dashboard_links', JSON.stringify(current));
+                    alert('تم استعادة الروابط المفقودة!');
+                    location.reload();
+                } else {
+                    alert('جميع الروابط الأساسية موجودة بالفعل.');
+                }
+            }
+        }
+        
+        // --- Tab Logic Update ---
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            const btn = document.getElementById(`tab-${tab}`);
+            if(btn) btn.classList.add('active');
+            updateUI();
+        }
+
+        function getData(type) {
+            // Check if it's a custom section
+            if (type.startsWith('section_')) {
+                return JSON.parse(localStorage.getItem(`${type}_data`) || '[]');
+            }
+            return JSON.parse(localStorage.getItem(StorageKeys[type]) || '[]');
+        }
+
+        function saveData(type, data) {
+            // Check if it's a custom section
+            if (type.startsWith('section_')) {
+                localStorage.setItem(`${type}_data`, JSON.stringify(data));
+                return;
+            }
+            localStorage.setItem(StorageKeys[type], JSON.stringify(data));
+        }
+
+        // Init
+        initTabs();
+        updateUI();
+    </script>
+</body>
+</html>

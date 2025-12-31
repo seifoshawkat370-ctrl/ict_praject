@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استبيان المشروع</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>استبيان رأي</h1>
+            <p>شاركنا رأيك وتجربتك لنقوم بتحسين المحتوى</p>
+        </header>
+
+        <form id="feedbackForm" onsubmit="submitForm(event)">
+            <div class="form-group">
+                <label>1. ما هو تقييمك العام للمشروع؟ ⭐</label>
+                <div class="rating-options">
+                    <label class="radio-label"><input type="radio" name="rating" value="5" required> ممتاز</label>
+                    <label class="radio-label"><input type="radio" name="rating" value="4"> جيد جداً</label>
+                    <label class="radio-label"><input type="radio" name="rating" value="3"> جيد</label>
+                    <label class="radio-label"><input type="radio" name="rating" value="2"> مقبول</label>
+                    <label class="radio-label"><input type="radio" name="rating" value="1"> ضعيف</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>2. هل تعرضت سابقاً لهجمات برامج الفدية؟ 🔒</label>
+                <div class="radio-options">
+                    <label class="radio-label"><input type="radio" name="attacked" value="yes" required> نعم، للأسف</label>
+                    <label class="radio-label"><input type="radio" name="attacked" value="no"> لا، والحمد لله</label>
+                    <label class="radio-label"><input type="radio" name="attacked" value="unsure"> لست متأكداً</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>3. ملاحظات إضافية (اختياري) ✍️</label>
+                <textarea rows="4" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+            </div>
+
+            <button type="submit" class="btn">_إرسال الاستبيان</button>
+        </form>
+
+        <a href="../index.html" class="back-btn">_العودة للرئيسية</a>
+    </div>
+
+    <script>
+        function submitForm(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {
+                rating: formData.get('rating'),
+                attacked: formData.get('attacked'),
+                comment: e.target.querySelector('textarea').value,
+                date: new Date().toLocaleDateString('ar-EG')
+            };
+
+            // Get existing data or init empty array
+            const existingData = JSON.parse(localStorage.getItem('ransomware_survey_data') || '[]');
+            existingData.push(data);
+            
+            // Save back to localStorage
+            localStorage.setItem('ransomware_survey_data', JSON.stringify(existingData));
+
+            alert("شكراً لمشاركتك! تم حفظ إجابتك.");
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
