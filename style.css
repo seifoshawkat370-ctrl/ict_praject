@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Cairo:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #1e1e1e;
+    --sidebar-bg: #252526;
+    --accent-color: #007acc; /* VS Code Blue */
+    --text-color: #d4d4d4;
+    --keyword-color: #569cd6;
+    --string-color: #ce9178;
+    --comment-color: #6a9955;
+    --card-bg: #2d2d2d;
+    --border-color: #3e3e42;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira Code', 'Cairo', monospace;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+/* Background Grid Effect */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    padding: 40px 0;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: var(--keyword-color);
+    margin-bottom: 10px;
+    direction: rtl; 
+}
+
+.cursor {
+    color: var(--text-color);
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+header p {
+    color: var(--comment-color);
+    font-size: 1.1rem;
+}
+
+.search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 50px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 15px 20px 15px 50px; /* Left padding for icon */
+    background: var(--sidebar-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#searchInput:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    right: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
+    animation: fadeInUp 0.5s ease-out backwards;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--keyword-color);
+}
+
+.card-header {
+    background: var(--sidebar-bg);
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+.card-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: var(--keyword-color);
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.card-desc {
+    color: var(--comment-color);
+    font-size: 0.9rem;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--string-color);
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+footer {
+    margin-top: 80px;
+    color: var(--comment-color);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Deep Search Enhancements */
+.search-tag {
+    margin-right: auto;
+    font-size: 0.65rem;
+    color: var(--comment-color);
+    background: rgba(106, 153, 85, 0.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(106, 153, 85, 0.2);
+    font-family: 'Fira Code', monospace;
+}
+
+.card.deep-result {
+    border-style: dashed;
+    background: rgba(45, 45, 45, 0.5);
+}
+
+.card.deep-result .card-title {
+    color: var(--string-color);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--keyword-color);
+}

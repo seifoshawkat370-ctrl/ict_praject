@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القسم</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container { width: 90%; max-width: 1000px; margin: 40px auto; }
+        header { text-align: center; margin-bottom: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: #252526; border: 1px solid #333; padding: 20px; border-radius: 8px; text-decoration: none; color: #eee; transition: 0.3s; display: block; }
+        .card:hover { transform: translateY(-5px); border-color: #007acc; }
+        .icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-btn { display: inline-block; margin-top: 40px; color: #569cd6; text-decoration: none; border: 1px solid #569cd6; padding: 10px 20px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="pageTitle">القسم</h1>
+        </header>
+
+        <div class="grid" id="contentGrid">
+            <!-- Items injected here -->
+        </div>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="back-btn">_العودة للرئيسية</a>
+        </div>
+    </div>
+
+    <script>
+        // Get Section ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sectionId = urlParams.get('id');
+        const sectionTitle = urlParams.get('title') || 'القسم';
+
+        document.getElementById('pageTitle').textContent = sectionTitle;
+        document.title = sectionTitle;
+
+        const container = document.getElementById('contentGrid');
+        
+        // Load Data for this section
+        const dataKey = `section_${sectionId}_data`;
+        const items = JSON.parse(localStorage.getItem(dataKey) || '[]');
+
+        if (items.length === 0) {
+            container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">-- لا توجد ملفات في هذا القسم بعد --</p>';
+        } else {
+            items.forEach(item => {
+                const card = document.createElement('a');
+                card.href = item.url;
+                card.className = 'card';
+                card.target = item.url.startsWith('http') ? '_blank' : '_self';
+                card.innerHTML = `
+                    <div class="icon">${item.icon}</div>
+                    <h3>${item.title}</h3>
+                    <p style="font-size: 0.9rem; color: #aaa; margin-top: 5px;">${item.description || ''}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
